@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  guessaiword:
+    env_file: .env
+    image: shutupandtakemy.codes/guessaiword:latest
+    restart: always
+    user: "1000:1000"
+    command: java -jar build.jar --spring.datasource.url=jdbc:mariadb://db:3306/guessaiword --spring.datasource.driverClassName=org.mariadb.jdbc.Driver --spring.datasource.username=guessaiword --spring.datasource.password=${MARIADB_PASSWORD}
+    networks:
+      - nginx
+      - guessaiword
+    environment:
+      - AI_API_KEY=${AI_API_KEY}
+    expose:
+      - 8080
+  guessaiword-adminer:
+    image: adminer
+    restart: always
+    user: "1000:1000"
+    networks:
+      - nginx
+      - guessaiword
+    expose:
+      - 8080
+  db:
+    env_file: .env
+    image: mariadb
+    restart: always
+    user: "1000:1000"
+    networks:
+      - guessaiword
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    expose:
+      - 3306
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=guessaiword
+      - MARIADB_USER=guessaiword
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+
+networks:
+  nginx:
+    name: nginx
+  guessaiword:

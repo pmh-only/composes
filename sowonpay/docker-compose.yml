@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  sowon-frontend:
+    image: shutupandtakemy.codes/sowonpay-frontend
+    restart: always
+    networks:
+      - nginx
+      - sowonpay
+    expose:
+      - 8080
+  sowon-backend:
+    image: shutupandtakemy.codes/sowonpay-backend
+    restart: always
+    volumes:
+      - ./.env:/app/.env:ro
+    networks:
+      - nginx
+      - sowonpay
+    expose:
+      - 8080
+  sowon-adminer:
+    image: adminer
+    restart: always
+    networks:
+      - nginx
+      - sowonpay
+    expose:
+      - 8080
+  mariadb:
+    image: mariadb
+    restart: always
+    networks:
+      - sowonpay
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    expose:
+      - 3306
+    env_file: .env
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=sowonpay
+      - MARIADB_USER=sowonpay
+      - MARIADB_PASSWORD=${DB_PASSWD}
+
+networks:
+  nginx:
+    name: nginx
+  sowonpay:

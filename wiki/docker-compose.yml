@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  wiki-frontend:
+    image: mediawiki
+    restart: always
+    volumes:
+      - ./image:/var/www/html/images
+      - ./Neptune:/var/www/html/skins/Neptune
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - ./.htaccess:/var/www/html/.htaccess
+      - ./extensions/CSS:/var/www/html/extensions/CSS
+      - ./extensions/YouTube:/var/www/html/extensions/YouTube
+    networks:
+      - nginx
+      - wiki
+    expose:
+      - 80
+  wiki-adminer:
+    image: adminer
+    restart: always
+    networks:
+      - nginx
+      - wiki
+    expose:
+      - 8080
+  mariadb:
+    image: mariadb
+    restart: always
+    networks:
+      - wiki
+    volumes:
+      - ./data:/var/lib/mysql/data:rw
+    expose:
+      - 3306
+    env_file: .env
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=wiki
+      - MARIADB_USER=wiki
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+
+networks:
+  nginx:
+    name: nginx
+  wiki:
+
+volumes:
+  images:

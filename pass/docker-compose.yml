@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  pass-tomcat:
+    image: shutupandtakemy.codes/pass
+    restart: always
+    networks:
+      - nginx
+      - pass
+    expose:
+      - 8080
+  pass-adminer:
+    image: adminer
+    restart: always
+    networks:
+      - nginx
+      - pass
+    expose:
+      - 8080
+  mariadb:
+    image: mariadb
+    restart: always
+    networks:
+      - pass
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    expose:
+      - 3306
+    env_file: .env
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=pass
+      - MARIADB_USER=pass
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+
+networks:
+  nginx:
+    name: nginx
+  pass:

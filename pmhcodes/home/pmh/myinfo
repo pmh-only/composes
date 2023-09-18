@@ -1,0 +1,20 @@
+#!/bin/sh
+cat <<EOF | jq
+{
+  "name": "Minhyeok Park",
+  "birthYear": 2005,
+  "techStack": ["AWS", "Node.js", "Nest.js", "Kubernetes", "Golang"],
+  "locale": "ko-KR, Korea (North or South depends on how you behave.)",
+  "awards": [
+    "Worldskills KR 2021-2022 Cloud-Computing",
+    "KITRI Best of the Best 10th",
+    "SK Planet, Smart-teen App Challenge 2022",
+    "blabla..."
+  ],
+  "funFacts": {
+    "tabIs": "2 spaces (change my mind)",
+    "semicolon": "is useless. remove it (change my mind also)",
+    "homelabServer": "https://shutupandtakemy.codes"
+  }
+}
+EOF

@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  ip-reporter:
+    image: shutupandtakemy.codes/ip-reporter
+    restart: always
+    env_file: .env
+    user: 1000:1000
+    command: watch -n 3600 curl https://ip.shutupandtakemy.codes/${REPORTER_TOKEN}

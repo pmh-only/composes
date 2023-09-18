@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  bitwarden:
+    image: vaultwarden/server:latest
+    restart: always
+    user: "1000:1000"
+    env_file: .env
+    networks:
+      - nginx
+    environment:
+      SIGNUPS_ALLOWED: false
+      INVITATIONS_ALLOWED: false
+      ADMIN_TOKEN: ${ADMIN_TOKEN}
+      PUSH_ENABLED: true
+      PUSH_INSTALLATION_ID: ${PUSH_INSTALLATION_ID}
+      PUSH_INSTALLATION_KEY: ${PUSH_INSTALLATION_KEY}
+      DOMAIN: https://bitwarden.shutupandtakemy.codes
+    expose:
+      - "80"
+    volumes:
+      - ./data:/data/
+
+networks:
+  nginx:
+    name: nginx

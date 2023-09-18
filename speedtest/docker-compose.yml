@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  speedtest:
+    image: adolfintel/speedtest:latest
+    restart: always
+    networks:
+      - nginx
+    expose:
+      - 80
+    environment:
+      - 'TITLE=SHIT! SERONET SPEED'
+      - 'DISABLE_IPINFO=true'
+      - 'MODE=standalone'
+
+networks:
+  nginx:
+    name: nginx

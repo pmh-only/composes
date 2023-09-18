@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  djsgpt-bot:
+    env_file: .env
+    image: shutupandtakemy.codes/djs-gpt-forum
+    user: "1000:1000"
+    restart: always
+    volumes:
+      - ./data/logs/:/app/logs:rw
+    environment:
+      - DATABASE_HOST=djsgpt-db
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DISCORD_FORUM_ID=${DISCORD_FORUM_ID}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - djsgpt
+  djsgpt-adminer:
+    user: "1000:1000"
+    image: adminer
+    restart: always
+    networks:
+      - nginx
+      - djsgpt
+    expose:
+      - 8080
+  djsgpt-db:
+    env_file: .env
+    user: "1000:1000"
+    image: mariadb
+    restart: always
+    networks:
+      - djsgpt
+    volumes:
+      - ./data/mysql:/var/lib/mysql:rw
+    expose:
+      - 3306
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=djsgpt
+      - MARIADB_USER=djsgpt
+      - MARIADB_PASSWORD=${DATABASE_PASSWORD}
+
+networks:
+  nginx:
+    name: nginx
+  djsgpt:

@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  chatsolution:
+    image: shutupandtakemy.codes/chatsolution
+    restart: always
+    networks:
+      - nginx
+    expose:
+      - 80
+networks:
+  nginx:
+    name: nginx
