@@ -1,0 +1,86 @@
+version: '3.9'
+services:
+  grafana:
+    image: grafana/grafana
+    restart: always
+    user: root
+    environment:
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+    volumes:
+      - ./data/grafana:/etc/grafana:rw
+      - ./data/grafana:/var/lib/grafana:rw
+      - ./grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana.ini:/var/lib/grafana/grafana.ini:ro
+    expose:
+      - "3000"
+    networks:
+      - nginx
+      - monitoring
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    restart: always
+    networks:
+      - monitoring
+    expose:
+      - "8081"
+  node-exporter:
+    image: prom/node-exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /run/systemd/private:/run/systemd/private:ro
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.systemd'
+      - '--collector.processes'
+    expose:
+      - 9100
+    networks:
+      - monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    restart: always
+    user: root
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    expose:
+      - 9090
+    networks:
+      - monitoring
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.45.0
+    restart: always
+    user: root
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - /dev/kmsg
+    expose:
+      - 8080
+    networks:
+      - monitoring
+
+networks:
+  nginx:
+    name: nginx
+  monitoring:
+    driver: bridge
