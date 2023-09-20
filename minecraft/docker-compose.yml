@@ -1,0 +1,115 @@
+version: "3.9"
+services:
+  mc-proxy:
+    build: ./proxy
+    restart: always
+    stdin_open: true
+    user: 1000:1000
+    tty: true
+    networks:
+      - nginx
+      - minecraft
+    volumes:
+      - ./proxy:/app/:rw
+    expose:
+      - '25565'
+  mc-lobby:
+    build: ./lobby
+    stdin_open: true
+    user: 1000:1000
+    tty: true
+    restart: always
+    networks:
+      - minecraft
+    volumes:
+      - ./lobby:/app/:rw
+    expose:
+      - '25565'
+  mc-survival:
+    build: ./survival
+    stdin_open: true
+    tty: true
+    user: 1000:1000
+    restart: always
+    depends_on:
+      - mc-proxy
+    networks:
+      - nginx
+      - minecraft
+    volumes:
+      - ./survival:/app/:rw
+      - /mnt/minecraft-backups/survival:/app/Backups:rw
+    expose:
+      - '25565'
+      - '8123'
+  mc-seek:
+    build: ./seek
+    restart: always
+    user: 1000:1000
+    stdin_open: true
+    tty: true
+    networks:
+      - minecraft
+    volumes:
+      - ./seek:/app/:rw
+    expose:
+      - '25565'
+  mc-boom:
+    build: ./boom
+    restart: always
+    stdin_open: true
+    user: 1000:1000
+    tty: true
+    networks:
+      - minecraft
+    volumes:
+      - ./boom:/app/:rw
+    expose:
+      - '25565'
+  mc-creative:
+    build: ./creative
+    restart: always
+    user: 1000:1000
+    stdin_open: true
+    tty: true
+    networks:
+      - minecraft
+    volumes:
+      - ./creative:/app/:rw
+      - /mnt/minecraft-backups/creative:/app/Backups:rw
+    expose:
+      - '25565'
+  mc-bedwars:
+    build: ./bedwars
+    restart: always
+    stdin_open: true
+    tty: true
+    user: 1000:1000
+    networks:
+      - minecraft
+    volumes:
+      - ./bedwars:/app/:rw
+    expose:
+      - '25565'
+  mariadb:
+    image: mariadb
+    restart: always
+    user: 1000:1000
+    networks:
+      - minecraft
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    expose:
+      - 3306
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=minecraft
+      - MARIADB_USER=minecraft
+      - MARIADB_PASSWORD=minecraftadmin123!!
+
+networks:
+  nginx:
+    driver: bridge
+    name: nginx
+  minecraft:
+    driver: bridge
