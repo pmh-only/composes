@@ -101,11 +101,12 @@ services:
       - ./data:/var/lib/mysql:rw
     expose:
       - 3306
+    env_file: .env
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=yes
       - MARIADB_DATABASE=minecraft
       - MARIADB_USER=minecraft
-      - MARIADB_PASSWORD=minecraftadmin123!!
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
 
 networks:
   nginx:
