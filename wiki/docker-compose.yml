@@ -29,7 +29,7 @@ services:
     networks:
       - wiki
     volumes:
-      - ./data:/var/lib/mysql/data:rw
+      - ./data:/var/lib/mysql:rw
     expose:
       - 3306
     env_file: .env
