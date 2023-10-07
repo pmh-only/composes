@@ -7,7 +7,6 @@ services:
     user: 1000:1000
     tty: true
     networks:
-      - nginx
       - minecraft
     volumes:
       - ./proxy:/app/:rw
@@ -25,6 +24,7 @@ services:
       - ./lobby:/app/:rw
     expose:
       - '25565'
+      - 8123
   mc-survival:
     build: ./survival
     stdin_open: true
@@ -34,7 +34,6 @@ services:
     depends_on:
       - mc-proxy
     networks:
-      - nginx
       - minecraft
     volumes:
       - ./survival:/app/:rw
@@ -79,6 +78,7 @@ services:
       - /mnt/minecraft-backups/creative:/app/Backups:rw
     expose:
       - '25565'
+      - 8123
   mc-bedwars:
     build: ./bedwars
     restart: always
@@ -107,6 +107,21 @@ services:
       - MARIADB_DATABASE=minecraft
       - MARIADB_USER=minecraft
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+  mc-nginx:
+    image: nginx:mainline
+    restart: always
+    ipc: host
+    networks:
+      - minecraft
+      - nginx
+    volumes:
+      - ./conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - ./conf:/etc/nginx/:ro
+      - /var/www:/var/www:rw
+      - /var/log/nginx:/var/log/nginx:rw
+    expose:
+      - 80
+      - 25565
 
 networks:
   nginx:

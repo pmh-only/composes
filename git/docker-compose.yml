@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  gitea:
+    env_file: .env
+    image: gitea/gitea:latest-rootless
+    restart: always
+    networks:
+      - nginx
+      - git
+    environment:
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=db:3306
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=gitea
+      - GITEA__database__PASSWD=${MARIADB_PASSWORD}
+    volumes:
+      - ./gitea/data:/var/lib/gitea
+      - ./gitea/config:/etc/gitea
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - 3000
+      - 22
+    depends_on:
+      - db
+
+  db:
+    env_file: .env
+    image: mariadb
+    restart: always
+    user: "1000:1000"
+    networks:
+      - git
+    volumes:
+      - ./mysql:/var/lib/mysql:rw
+    expose:
+      - 3306
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=gitea
+      - MARIADB_USER=gitea
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+
+networks:
+  nginx:
+    name: nginx
+  git:

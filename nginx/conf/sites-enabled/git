@@ -4,10 +4,13 @@ server {
 
     add_header Alt-Svc 'h3=":$server_port"; ma=86400';
 
-    server_name *.mc.shutupandtakemy.codes mc.shutupandtakemy.codes mcmap.shutupandtakemy.codes;
+    server_name git.pmh.codes;
+    ssl_certificate /certs/live/pmh.codes-0001/fullchain.pem;
+    ssl_certificate_key /certs/live/pmh.codes-0001/privkey.pem;
+    ssl_trusted_certificate /certs/live/pmh.codes-0001/chain.pem;
  
     location / {
-        proxy_pass http://mc-nginx:80;
+        proxy_pass http://gitea:3000;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

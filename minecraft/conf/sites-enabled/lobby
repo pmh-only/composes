@@ -1,13 +1,10 @@
 server {
-    listen 443 ssl http2;
-    listen 443 quic;
+    listen 80;
 
-    add_header Alt-Svc 'h3=":$server_port"; ma=86400';
+    server_name lobby.mc.shutupandtakemy.codes;
 
-    server_name *.mc.shutupandtakemy.codes mc.shutupandtakemy.codes mcmap.shutupandtakemy.codes;
- 
     location / {
-        proxy_pass http://mc-nginx:80;
+        proxy_pass http://mc-lobby:8123;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
