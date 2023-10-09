@@ -1,5 +1,6 @@
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+  http2 on;
     listen 443 quic;
 
     add_header Alt-Svc 'h3=":$server_port"; ma=86400';
@@ -41,7 +42,8 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+  http2 on;
 
     server_name pass-ligvbcssqg.shutupandtakemy.codes;
  
