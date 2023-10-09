@@ -7,22 +7,33 @@ server {
 	}
 }
 
-
 server {
-	listen 443 ssl;
-  http2 on;
-	listen 443 quic;
-
-	add_header Alt-Svc 'h3=":$server_port"; ma=86400';
-	add_header  Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+	include /etc/nginx/commons.conf;
+	include /etc/nginx/ssl-shutupandtakemycodes.conf;
 
 	root /var/www/notfounddns;
 
 	index index.html;
 
-	server_name _;
+	server_name *.shutupandtakemy.codes;
 
 	location / {
 		try_files $uri /index.html =404;
 	}
 }
+
+server {
+	include /etc/nginx/commons.conf;
+	include /etc/nginx/ssl-pmhcodes.conf;
+
+	root /var/www/notfounddns;
+
+	index index.html;
+
+	server_name *.pmh.codes;
+
+	location / {
+		try_files $uri /index.html =404;
+	}
+}
+
