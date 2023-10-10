@@ -1,0 +1,4 @@
+server {
+	listen     9102;
+	proxy_pass mc-bedwars:9100;
+}

@@ -1,0 +1,4 @@
+server {
+	listen     9103;
+	proxy_pass mc-boom:9100;
+}

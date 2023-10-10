@@ -1,0 +1,4 @@
+server {
+	listen     9104;
+	proxy_pass mc-creative:9100;
+}

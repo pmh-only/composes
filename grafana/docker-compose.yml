@@ -61,6 +61,7 @@ services:
       - 9090
     networks:
       - monitoring
+      - mc-monitor
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
     restart: always
@@ -84,3 +85,6 @@ networks:
     name: nginx
   monitoring:
     driver: bridge
+  mc-monitor:
+    name: mc-monitor
+

@@ -14,3 +14,45 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['cadvisor:8080']
+  - job_name: 'mc-proxy'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9100']
+        labels:
+          instance: "proxy.mc"
+  - job_name: 'mc-lobby'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9101']
+        labels:
+          instance: "lobby.mc"
+  - job_name: 'mc-bedwars'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9102']
+        labels:
+          instance: "bedwars.mc"
+  - job_name: 'mc-boom'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9103']
+        labels:
+          instance: "boom.mc"
+  - job_name: 'mc-creative'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9104']
+        labels:
+          instance: "creative.mc"
+  - job_name: 'mc-seek'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9105']
+        labels:
+          instance: "seek.mc"
+  - job_name: 'mc-survival'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9106']
+        labels:
+          instance: "survival.mc"
