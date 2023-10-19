@@ -5,7 +5,8 @@
     server_name bbs.shutupandtakemy.codes;
  
     location / {
-        proxy_pass http://bbs:8080;
+        set $upstream http://bbs:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

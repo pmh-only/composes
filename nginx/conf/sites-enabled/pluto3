@@ -5,7 +5,8 @@ server {
     server_name pluto3.shutupandtakemy.codes;
  
     location / {
-        proxy_pass http://pluto3:3300;
+        set $upstream http://pluto3:3300;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -17,7 +18,8 @@ server {
     }
 
    location /_db {
-        proxy_pass http://pluto3-adminer:8080;
+        set $upstream http://pluto3-adminer:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

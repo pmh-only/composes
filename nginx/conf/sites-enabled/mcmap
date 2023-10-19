@@ -5,7 +5,8 @@ server {
     server_name *.mc.shutupandtakemy.codes mc.shutupandtakemy.codes mcmap.shutupandtakemy.codes;
  
     location / {
-        proxy_pass http://mc-nginx:80;
+        set $upstream http://mc-nginx:80;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

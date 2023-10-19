@@ -5,7 +5,8 @@ server {
     server_name chatsolution.shutupandtakemy.codes;
  
     location / {
-        proxy_pass http://chatsolution:80;
+        set $upstream http://chatsolution:80;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

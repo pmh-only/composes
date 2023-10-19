@@ -5,7 +5,8 @@ server {
     server_name mail.shutupandtakemy.codes;
  
     location / {
-        proxy_pass http://mail:8080;
+        set $upstream http://mail:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

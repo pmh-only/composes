@@ -13,7 +13,8 @@ server {
     }
 
     location ~ /(student|detail).jsp {
-        proxy_pass http://pass-tomcat:8080;
+        set $upstream http://pass-tomcat:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -25,7 +26,8 @@ server {
     }
 
    location /db {
-        proxy_pass http://pass-adminer:8080;
+        set $upstream http://pass-adminer:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -52,7 +54,8 @@ server {
     }
 
     location / {
-        proxy_pass http://pass-tomcat:8080;
+        set $upstream http://pass-tomcat:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -64,7 +67,8 @@ server {
     }
 
    location /db {
-        proxy_pass http://pass-adminer:8080;
+        set $upstream http://pass-adminer:8080;
+        proxy_pass $upstream;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
