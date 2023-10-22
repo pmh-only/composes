@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  supershort:
+    user: 1000:1000
+    image: shutupandtakemy.codes/supershort
+    restart: always
+    volumes:
+      - ./data/sqlite.db:/app/sqlite.db
+    expose:
+      - 8080
+    networks:
+      - nginx
+
+networks:
+  nginx:
+    name: nginx
