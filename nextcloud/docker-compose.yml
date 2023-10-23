@@ -45,6 +45,15 @@ services:
     networks:
       - nextcloud
 
+  nextcloud-adminer:
+    image: adminer
+    restart: always
+    networks:
+      - nginx
+      - nextcloud
+    expose:
+      - 8080
+
 networks:
   nginx:
     name: nginx

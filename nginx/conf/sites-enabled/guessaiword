@@ -5,8 +5,7 @@ server {
     server_name guessaiword.shutupandtakemy.codes;
 
     location / {
-        set $upstream http://guessaiword:8080;
-        proxy_pass $upstream;
+        proxy_pass http://guessaiword:8080;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -18,8 +17,7 @@ server {
     }
 
     location /db {
-        set $upstream http://guessaiword-adminer:8080;
-        proxy_pass $upstream;
+        proxy_pass http://guessaiword-adminer:8080;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;

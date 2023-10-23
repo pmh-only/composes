@@ -5,8 +5,7 @@ server {
     server_name sowonpay.shutupandtakemy.codes;
  
     location / {
-        set $upstream http://sowon-frontend:8080;
-        proxy_pass $upstream;
+        proxy_pass http://sowon-frontend:8080;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -18,8 +17,7 @@ server {
     }
 
     location /api {
-        set $upstream http://sowon-backend:8080;
-        proxy_pass $upstream;
+        proxy_pass http://sowon-backend:8080;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
@@ -31,8 +29,7 @@ server {
     }
 
    location /db {
-        set $upstream http://sowon-adminer:8080;
-        proxy_pass $upstream;
+        proxy_pass http://sowon-adminer:8080;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
