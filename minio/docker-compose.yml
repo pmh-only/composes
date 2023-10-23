@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  minio:
+    image: minio/minio
+    command: server /data --address :9000 --console-address :9001
+    restart: always
+    user: 1000:1000
+    volumes:
+      - /mnt/minio:/data
+    env_file: .env
+    environment:
+      - MINIO_DOMAIN=s3.pmh.codes
+      - MINIO_SERVER_URL=https://s3.pmh.codes
+      - MINIO_BROWSER_REDIRECT_URL=https://minio.pmh.codes
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_PROMETHEUS_URL=http://prometheus:9090
+      - MINIO_PROMETHEUS_JOB_ID=minio-cluster
+    expose:
+      - 9000
+      - 9001
+    networks:
+      - nginx
+      - minio-monitor
+
+networks:
+  nginx:
+    name: nginx
+  minio-monitor:
+    name: minio-monitor
