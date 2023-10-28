@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  buhtig-frontend:
+    image: shutupandtakemy.codes/buhtig-frontend
+    restart: always
+    user: 1000:1000
+    expose:
+      - 3000
+    networks:
+      - nginx
+
+  buhtig-backend:
+    image: shutupandtakemy.codes/buhtig-backend
+    restart: always
+    user: 1000:1000
+    volumes:
+      - ./data/files:/app/files
+    environment:
+      - DATABASE_SYNC=true
+      - DATABASE_HOST=mariadb
+      - DATABASE_PASSWORD=buhtig
+    expose:
+      - 3000
+    networks:
+      - nginx
+      - buhtig
+
+  mariadb:
+    image: mariadb
+    restart: always
+    user: 1000:1000
+    networks:
+      - buhtig
+    volumes:
+      - ./data/db:/var/lib/mysql:rw
+    expose:
+      - 3306
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=buhtig
+      - MARIADB_USER=buhtig
+      - MARIADB_PASSWORD=buhtig
+
+networks:
+  nginx:
+    name: nginx
+  buhtig:
