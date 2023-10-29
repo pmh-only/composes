@@ -1,4 +1,0 @@
-server {
-	listen     9105;
-	proxy_pass mc-seek:9100;
-}

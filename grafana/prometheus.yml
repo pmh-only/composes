@@ -32,24 +32,12 @@ scrape_configs:
       - targets: ['mc-nginx:9102']
         labels:
           instance: "bedwars.mc"
-  - job_name: 'mc-boom'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['mc-nginx:9103']
-        labels:
-          instance: "boom.mc"
   - job_name: 'mc-creative'
     scrape_interval: 5s
     static_configs:
       - targets: ['mc-nginx:9104']
         labels:
           instance: "creative.mc"
-  - job_name: 'mc-seek'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['mc-nginx:9105']
-        labels:
-          instance: "seek.mc"
   - job_name: 'mc-survival'
     scrape_interval: 5s
     static_configs:
