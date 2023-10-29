@@ -26,12 +26,6 @@ scrape_configs:
       - targets: ['mc-nginx:9101']
         labels:
           instance: "lobby.mc"
-  - job_name: 'mc-bedwars'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['mc-nginx:9102']
-        labels:
-          instance: "bedwars.mc"
   - job_name: 'mc-creative'
     scrape_interval: 5s
     static_configs:
