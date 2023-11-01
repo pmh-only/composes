@@ -11,6 +11,6 @@ server {
 	}
 
 	location ~* /(.+\.tar\.gz)$ {
-    add_header Content-disposition "attachment; filename=$1";
+		add_header Content-disposition "attachment; filename=$1";
 	}
 }
