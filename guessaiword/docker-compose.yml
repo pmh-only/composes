@@ -5,7 +5,7 @@ services:
     image: shutupandtakemy.codes/guessaiword:latest
     restart: always
     user: "1000:1000"
-    command: java -jar build.jar --spring.datasource.url=jdbc:mariadb://db:3306/guessaiword --spring.datasource.driverClassName=org.mariadb.jdbc.Driver --spring.datasource.username=guessaiword --spring.datasource.password=${MARIADB_PASSWORD}
+    command: java -jar build.jar --spring.datasource.url=jdbc:mariadb://db:3306/guessaiword --spring.datasource.driverClassName=org.mariadb.jdbc.Driver --spring.datasource.username=guessaiword --spring.datasource.password=${MARIADB_PASSWORD} --guessaiword.ai.model=gpt-4
     networks:
       - nginx
       - guessaiword
