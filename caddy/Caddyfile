@@ -1,6 +1,7 @@
 {
 	email pmh_only@pmh.codes
 	acme_dns cloudflare {env.CLOUDFLARE_KEY}
+	order replace after encode
 
 	layer4 {
 		:2022 {
@@ -61,6 +62,8 @@ www.shutupandtakemy.codes {
 
 r.shutupandtakemy.codes {
 	import commons
+
+	replace "r.shutupandtakemy.codes" "shutupandtakemy.codes"
 
 	reverse_proxy regdisplay:8080
 	reverse_proxy /v2* registry:5000
