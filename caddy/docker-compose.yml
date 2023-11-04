@@ -1,8 +1,9 @@
 version: "3.9"
 services:
-  ingress:
+  caddy:
     image: shutupandtakemy.codes/caddy
     restart: always
+    user: 1000:1000
     networks:
       - ingress
     volumes:
@@ -10,12 +11,16 @@ services:
       - ./config:/config
       - ./Caddyfile:/etc/caddy/Caddyfile
       - /var/www:/var/www
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
     ports:
-      - "1180:1180/tcp"
-      - "1443:1443/tcp"
-      - "1443:1443/udp"
-      - "12022:12022/tcp"
-      - "125565:125565/tcp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+      - "2022:2022/tcp"
+      - "25565:25565/tcp"
 
 networks:
   ingress:

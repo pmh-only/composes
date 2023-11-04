@@ -4,7 +4,7 @@ services:
     restart: always
     image: shutupandtakemy.codes/reg
     networks:
-      - nginx
+      - ingress
       - registry
     expose:
       - 8080
@@ -15,7 +15,7 @@ services:
     image: registry:2
     user: "1000:1000"
     networks:
-      - nginx
+      - ingress
       - registry
     expose:
       - 5000
@@ -27,7 +27,7 @@ services:
     image: registry:2
     user: "1000:1000"
     networks:
-      - nginx
+      - ingress
       - registry
     expose:
       - 5000
@@ -40,6 +40,6 @@ services:
       - ./auth:/auth
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   registry:

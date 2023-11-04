@@ -7,7 +7,7 @@ services:
     user: "1000:1000"
     env_file: .env
     networks:
-      - nginx
+      - ingress
     environment:
       SIGNUPS_ALLOWED: false
       INVITATIONS_ALLOWED: false
@@ -22,5 +22,5 @@ services:
       - ./data:/data/
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress

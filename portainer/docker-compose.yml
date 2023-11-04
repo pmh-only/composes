@@ -13,8 +13,8 @@ services:
     expose:
       - 9000
     networks:
-      - nginx
+      - ingress
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress

@@ -6,7 +6,7 @@ services:
     image: gitea/gitea:latest-rootless
     restart: always
     networks:
-      - nginx
+      - ingress
       - git
     environment:
       - GITEA__database__DB_TYPE=mysql
@@ -43,6 +43,6 @@ services:
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   git:

@@ -4,7 +4,7 @@ services:
     image: adolfintel/speedtest:latest
     restart: always
     networks:
-      - nginx
+      - ingress
     expose:
       - 80
     environment:
@@ -13,5 +13,5 @@ services:
       - 'MODE=standalone'
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress

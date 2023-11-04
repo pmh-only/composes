@@ -168,7 +168,7 @@ services:
     restart: always
     networks:
       - minecraft
-      - nginx
+      - ingress
       - mc-monitor
     volumes:
       - ./conf:/etc/nginx/:ro
@@ -182,9 +182,9 @@ services:
       - 9106
 
 networks:
-  nginx:
+  ingress:
     driver: bridge
-    name: nginx
+    name: ingress
   minecraft:
     driver: bridge
   mc-monitor:

@@ -7,7 +7,7 @@ services:
     user: "1000:1000"
     command: java -jar build.jar --spring.datasource.url=jdbc:mariadb://db:3306/guessaiword --spring.datasource.driverClassName=org.mariadb.jdbc.Driver --spring.datasource.username=guessaiword --spring.datasource.password=${MARIADB_PASSWORD} --guessaiword.ai.model=gpt-4
     networks:
-      - nginx
+      - ingress
       - guessaiword
     environment:
       - AI_API_KEY=${AI_API_KEY}
@@ -18,7 +18,7 @@ services:
     restart: always
     user: "1000:1000"
     networks:
-      - nginx
+      - ingress
       - guessaiword
     expose:
       - 8080
@@ -40,6 +40,6 @@ services:
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   guessaiword:

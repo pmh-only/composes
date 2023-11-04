@@ -8,7 +8,7 @@ services:
     expose:
       - 3000
     networks:
-      - nginx
+      - ingress
 
   buhtig-backend:
     image: shutupandtakemy.codes/buhtig-backend
@@ -23,7 +23,7 @@ services:
     expose:
       - 3000
     networks:
-      - nginx
+      - ingress
       - buhtig
 
   mariadb:
@@ -43,6 +43,6 @@ services:
       - MARIADB_PASSWORD=buhtig
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   buhtig:

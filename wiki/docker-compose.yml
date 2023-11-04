@@ -11,7 +11,7 @@ services:
       - ./extensions/CSS:/var/www/html/extensions/CSS
       - ./extensions/YouTube:/var/www/html/extensions/YouTube
     networks:
-      - nginx
+      - ingress
       - wiki
     expose:
       - 80
@@ -19,7 +19,7 @@ services:
     image: adminer
     restart: always
     networks:
-      - nginx
+      - ingress
       - wiki
     expose:
       - 8080
@@ -40,8 +40,8 @@ services:
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   wiki:
 
 volumes:

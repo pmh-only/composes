@@ -4,7 +4,7 @@ services:
     image: shutupandtakemy.codes/sowonpay-frontend
     restart: always
     networks:
-      - nginx
+      - ingress
       - sowonpay
     expose:
       - 8080
@@ -14,7 +14,7 @@ services:
     volumes:
       - ./.env:/app/.env:ro
     networks:
-      - nginx
+      - ingress
       - sowonpay
     expose:
       - 8080
@@ -22,7 +22,7 @@ services:
     image: adminer
     restart: always
     networks:
-      - nginx
+      - ingress
       - sowonpay
     expose:
       - 8080
@@ -43,6 +43,6 @@ services:
       - MARIADB_PASSWORD=${DB_PASSWD}
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   sowonpay:

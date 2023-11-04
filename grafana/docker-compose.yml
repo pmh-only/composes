@@ -15,7 +15,7 @@ services:
     expose:
       - "3000"
     networks:
-      - nginx
+      - ingress
       - monitoring
   renderer:
     image: grafana/grafana-image-renderer:latest
@@ -82,8 +82,8 @@ services:
       - monitoring
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   monitoring:
     driver: bridge
   mc-monitor:

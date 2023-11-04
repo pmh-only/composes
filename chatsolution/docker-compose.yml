@@ -4,9 +4,9 @@ services:
     image: shutupandtakemy.codes/chatsolution
     restart: always
     networks:
-      - nginx
+      - ingress
     expose:
       - 80
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress

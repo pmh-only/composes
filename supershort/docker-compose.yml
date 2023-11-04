@@ -10,8 +10,8 @@ services:
     expose:
       - 8080
     networks:
-      - nginx
+      - ingress
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress

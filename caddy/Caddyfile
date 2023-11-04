@@ -1,3 +1,194 @@
-shutupadntakemy.codes:1443 {
-  respond "Hello, world!"
+{
+	email pmh_only@pmh.codes
+	acme_dns cloudflare {env.CLOUDFLARE_KEY}
+
+	layer4 {
+		:2022 {
+			proxy {
+				to gitea:22
+			}
+		}
+
+		:25565 {
+			proxy {
+				to mc-nginx:25565
+			}
+		}
+	}
+}
+
+(commons) {
+	encode zstd gzip
+	header -Server
+	header +Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+}
+
+(404index) {
+	handle_errors {
+		@404 {
+			expression {http.error.status_code} == 404
+		}
+
+		header -Server
+
+		rewrite @404 /index.html
+		file_server
+	}
+}
+
+*.shutupandtakemy.codes {
+	import commons
+	root * /var/www/notfounddns
+
+	file_server
+}
+
+shutupandtakemy.codes {
+	import commons
+	import 404index
+
+	root * /var/www/home
+
+	file_server
+	reverse_proxy /v2* registryro:5000
+}
+
+www.shutupandtakemy.codes {
+	import commons
+
+	redir https://shutupandtakemy.codes{uri} permanent
+}
+
+r.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy regdisplay:8080
+	reverse_proxy /v2* registry:5000
+}
+
+bitwarden.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy * bitwarden:80
+}
+
+chatsolution.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy chatsolution:80
+}
+
+djsgpt.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy djsgpt-adminer:8080
+}
+
+git.pmh.codes {
+	import commons
+
+	reverse_proxy gitea:3000
+}
+
+grafana.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy grafana:3000
+}
+
+guessaiword.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy guessaiword:8080
+	reverse_proxy /db* guessaiword-adminer:8080
+}
+
+hello.shutupandtakemy.codes {
+	import commons
+
+	respond "Hello, world! from caddy2"
+}
+
+*.mc.shutupandtakemy.codes mc.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy mc-nginx:80
+}
+
+*.s3.pmh.codes s3.pmh.codes {
+	import commons
+
+	reverse_proxy minio:9000
+}
+
+minio.pmh.codes {
+	import commons
+
+	reverse_proxy minio:9001
+}
+
+drive.pmh.codes {
+	import commons
+
+	redir /.well-known/carddav /remote.php/dav permanent
+	redir /.well-known/caldav /remote.php/dav permanent
+
+	reverse_proxy nextcloud:80
+	reverse_proxy /db* nextcloud-adminer:8080
+}
+
+pmh.codes {
+	import commons
+
+	@query_exists {
+		expression {uri}.contains('?')
+	}
+
+	reverse_proxy host.docker.internal:7683
+	reverse_proxy @query_exists supershort:8080
+}
+
+www.pmh.codes {
+	import commons
+
+	redir https://pmh.codes{uri} permanent
+}
+
+portainer.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy portainer:9000
+}
+
+sandbox.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy host.docker.internal:7682
+}
+
+sowonpay.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy sowon-frontend:8080
+	reverse_proxy /api* sowon-backend:8080
+	reverse_proxy /db* sowon-adminer:8080
+}
+
+speed.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy speedtest:80
+}
+
+tig.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy buhtig-frontend:3000
+	reverse_proxy /api* buhtig-backend:3000
+}
+
+wiki.pmh.codes {
+	import commons
+
+	reverse_proxy wiki-frontend
 }

@@ -22,11 +22,11 @@ services:
       - 9000
       - 9001
     networks:
-      - nginx
+      - ingress
       - minio-monitor
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   minio-monitor:
     name: minio-monitor

@@ -20,7 +20,7 @@ services:
     image: adminer
     restart: always
     networks:
-      - nginx
+      - ingress
       - djsgpt
     expose:
       - 8080
@@ -42,6 +42,6 @@ services:
       - MARIADB_PASSWORD=${DATABASE_PASSWORD}
 
 networks:
-  nginx:
-    name: nginx
+  ingress:
+    name: ingress
   djsgpt:
