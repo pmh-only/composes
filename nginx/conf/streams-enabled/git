@@ -1,4 +1,0 @@
-server {
-	listen     2022;
-	proxy_pass gitea:22;
-}
