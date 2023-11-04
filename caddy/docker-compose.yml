@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  ingress:
+    image: shutupandtakemy.codes/caddy
+    restart: always
+    networks:
+      - ingress
+    volumes:
+      - ./data:/data
+      - ./config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - /var/www:/var/www
+    ports:
+      - "1180:1180/tcp"
+      - "1443:1443/tcp"
+      - "1443:1443/udp"
+      - "12022:12022/tcp"
+      - "125565:125565/tcp"
+
+networks:
+  ingress:
+    driver: bridge
+    name: ingress
