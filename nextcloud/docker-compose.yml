@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nextcloud:
-    image: nextcloud
+    image: shutupandtakemy.codes/nextcloud
     restart: always
     user: 1000:1000
     networks:
