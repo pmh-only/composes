@@ -53,3 +53,7 @@ scrape_configs:
     metrics_path: /minio/v2/metrics/bucket
     static_configs:
       - targets: ['minio:9000']
+  - job_name: caddy
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['caddy:2019']

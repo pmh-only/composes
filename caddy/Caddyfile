@@ -3,18 +3,8 @@
 	acme_dns cloudflare {env.CLOUDFLARE_KEY}
 	order replace after encode
 
-	layer4 {
-		:2022 {
-			proxy {
-				to gitea:22
-			}
-		}
-
-		:25565 {
-			proxy {
-				to mc-nginx:25565
-			}
-		}
+	servers {
+		metrics
 	}
 }
 
@@ -22,6 +12,17 @@
 	encode zstd gzip
 	header -Server
 	header +Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+	log {
+		output file /var/log/caddy/access.log {
+			roll_keep 100
+			roll_keep_for 720h
+		}
+
+		format transform `{request>remote_ip} - {request>user_id} [{ts}] "{request>method} {request>uri} {request>proto}" {status} {size} "{request>headers>Referer>[0]}" "{request>headers>User-Agent>[0]}"` {
+			time_format "02/Jan/2006:15:04:05 -0700"
+		}
+	}
 }
 
 (404index) {
@@ -39,8 +40,8 @@
 
 *.shutupandtakemy.codes {
 	import commons
-	root * /var/www/notfounddns
 
+	root * /var/www/notfounddns
 	file_server
 }
 
@@ -87,12 +88,6 @@ djsgpt.shutupandtakemy.codes {
 	reverse_proxy djsgpt-adminer:8080
 }
 
-git.pmh.codes {
-	import commons
-
-	reverse_proxy gitea:3000
-}
-
 grafana.shutupandtakemy.codes {
 	import commons
 
@@ -106,6 +101,13 @@ guessaiword.shutupandtakemy.codes {
 	reverse_proxy /db* guessaiword-adminer:8080
 }
 
+goaccess.shutupandtakemy.codes {
+	import commons
+
+	root * /var/www/report
+	file_server
+}
+
 hello.shutupandtakemy.codes {
 	import commons
 
@@ -115,7 +117,21 @@ hello.shutupandtakemy.codes {
 *.mc.shutupandtakemy.codes mc.shutupandtakemy.codes {
 	import commons
 
-	reverse_proxy mc-nginx:80
+	root * /var/www/mchome
+	file_server
+}
+
+map.mc.shutupandtakemy.codes {
+	import commons
+
+	reverse_proxy mc-lobby:8100
+}
+
+backup.mc.shutupandtakemy.codes {
+	import commons
+
+	root * /mnt/minecraft-backups
+	file_server * browse
 }
 
 *.s3.pmh.codes s3.pmh.codes {
@@ -155,6 +171,10 @@ www.pmh.codes {
 	import commons
 
 	redir https://pmh.codes{uri} permanent
+}
+
+*.pmh.codes {
+	redir https://pmh.codes
 }
 
 portainer.shutupandtakemy.codes {
