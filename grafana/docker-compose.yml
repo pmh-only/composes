@@ -60,6 +60,7 @@ services:
     expose:
       - 9090
     networks:
+      - ingress
       - monitoring
       - mc-monitor
       - minio-monitor

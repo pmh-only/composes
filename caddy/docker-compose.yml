@@ -11,16 +11,20 @@ services:
       - ./config:/config
       - ./Caddyfile:/etc/caddy/Caddyfile
       - /var/www:/var/www
+      - /mnt/minecraft-backups:/mnt/minecraft-backups
+      - /var/log/caddy:/var/log/caddy
     extra_hosts:
       - "host.docker.internal:host-gateway"
     env_file:
       - .env
+    environment:
+      - CADDY_ADMIN=0.0.0.0:2019
+    expose:
+      - "2019"
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
       - "443:443/udp"
-      - "2022:2022/tcp"
-      - "25565:25565/tcp"
 
 networks:
   ingress:

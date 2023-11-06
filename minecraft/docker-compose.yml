@@ -22,8 +22,8 @@ services:
       - minecraft
     volumes:
       - ./volumes/proxy:/app/:rw
-    expose:
-      - '25565'
+    ports:
+      - '25565:25565/tcp'
   mc-lobby:
     image: eclipse-temurin:18-alpine
     user: 1000:1000
@@ -60,6 +60,7 @@ services:
     restart: always
     networks:
       - minecraft
+      - ingress
     volumes:
       - ./volumes/lobby:/app/:rw
     expose:
@@ -168,14 +169,12 @@ services:
     restart: always
     networks:
       - minecraft
-      - ingress
       - mc-monitor
     volumes:
       - ./conf:/etc/nginx/:ro
       - /var/www:/var/www:rw
       - /mnt/minecraft-backups:/var/backups:rw
     expose:
-      - 25565
       - 9100
       - 9101
       - 9104
