@@ -16,6 +16,6 @@ echo $DATE > /mnt/minecraft-backups/LAST_DATE
 
 docker compose up -d
 
-if [ $FILE_COUNT -gt 7 ]; then
-  rm /mnt/minecraft-backups/$(ls -rt | head -n 1)
+if [ $FILE_COUNT -gt 9 ]; then
+  rm /mnt/minecraft-backups/$(ls -rt /mnt/minecraft-backups | head -n 1)
 fi
