@@ -985,7 +985,23 @@ footer {
 				{{- end}}
 			</div>
 			</main>
-		</div>
+			<div style="padding: 20px">
+				<pre>:: 백업 안내 ::
+매일 아침 4시(KST)에 .tar.gz 맵파일이 자동 백업됩니다
+백업 진행 중에는 마크 서버를 사용하실 수 없습니다.
+
+*메인 백업 서버는 백업을 7일간 저장합니다.
+
+바로 받는법 (리눅스):
+wget https://backup.mc.shutupandtakemy.codes/$(curl https://backup.mc.shutupandtakemy.codes/LAST_DATE).tar.gz
+
+
+:: 백업 미러 서버를 모집합니다 ::
+갑자기 서버 하드가 나가는 사태를 방지하기 위해
+위 백업을 주기적으로 다운 받는 미러 서버를 모집합니다.
+방법은 매일 아침 5시에 위 명령어를 cron job으로 실행시켜주시면 됩니다.</pre>
+			</div>
+		</foo>
 
 		<script>
 			const filterEl = document.getElementById('filter');

@@ -10,6 +10,7 @@
 
 (commons) {
 	encode zstd gzip
+
 	header -Server
 	header +Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 
