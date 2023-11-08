@@ -1,5 +1,4 @@
 #!/bin/bash
-echo -e "\e]2;S A N D B O X\a"
 echo "#####################"
 echo "##  S A N D B O X  ##"
 echo "#####################"
