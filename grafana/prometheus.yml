@@ -38,6 +38,12 @@ scrape_configs:
       - targets: ['mc-nginx:9106']
         labels:
           instance: "survival.mc"
+  - job_name: 'mc-minigames'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mc-nginx:9107']
+        labels:
+          instance: "survival.mc"
   - job_name: minio-cluster
     scrape_interval: 5s
     metrics_path: /minio/v2/metrics/cluster
