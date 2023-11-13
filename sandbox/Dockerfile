@@ -1,17 +1,7 @@
-FROM ubuntu:22.04
+FROM alpine
 
-RUN apt-get update
-RUN apt-get install node.js npm curl -y
-
-RUN npm i -g n typescript ts-node tslib @types/node
-RUN n latest
-RUN npm rm -g n
-
-RUN apt-get purge npm curl -y
-RUN apt-get autoremove -y
-
-RUN groupadd sandbox
-RUN useradd sandbox -m -g sandbox
+RUN apk add --no-cache nodejs
+RUN addgroup -S sandbox && adduser -S sandbox -G sandbox
 
 USER sandbox:sandbox
 

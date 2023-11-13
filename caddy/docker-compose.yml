@@ -10,6 +10,7 @@ services:
       - ./data:/data
       - ./config:/config
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./templates:/etc/caddy/templates
       - /var/www:/var/www
       - /mnt/minecraft-backups:/mnt/minecraft-backups
       - /var/log/caddy:/var/log/caddy

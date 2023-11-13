@@ -10,6 +10,7 @@
 
 (commons) {
 	encode zstd gzip
+
 	header -Server
 	header +Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 
@@ -127,11 +128,19 @@ map.mc.shutupandtakemy.codes {
 	reverse_proxy mc-lobby:8100
 }
 
+mcmap.shutupandtakemy.codes {
+	import commons
+
+	redir https://map.mc.shutupandtakemy.codes permanent
+}
+
 backup.mc.shutupandtakemy.codes {
 	import commons
 
 	root * /mnt/minecraft-backups
-	file_server * browse
+	file_server * {
+		browse /etc/caddy/templates/backupmc.html
+	}
 }
 
 *.s3.pmh.codes s3.pmh.codes {
