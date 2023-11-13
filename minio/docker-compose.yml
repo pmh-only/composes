@@ -10,7 +10,7 @@ services:
       - /mnt/minio:/data
     env_file: .env
     environment:
-      - MINIO_DOMAIN=s3.pmh.codes
+      - MINIO_DOMAIN=pmh.codes
       - MINIO_SERVER_URL=https://s3.pmh.codes
       - MINIO_BROWSER_REDIRECT_URL=https://minio.pmh.codes
       - MINIO_ROOT_USER=${MINIO_ROOT_USER}

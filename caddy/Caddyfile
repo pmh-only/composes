@@ -143,10 +143,28 @@ backup.mc.shutupandtakemy.codes {
 	}
 }
 
-*.s3.pmh.codes s3.pmh.codes {
+*.pmh.codes s3.pmh.codes {
 	import commons
 
-	reverse_proxy minio:9000
+	reverse_proxy / minio:9000 {
+		@4xx status 4xx
+		handle_response @4xx {
+			rewrite / /index.html
+		}
+	}
+
+	reverse_proxy minio:9000 {
+		@404 status 404
+		handle_response @404 {
+			respond * ":: 404 ::
+Oops, Resource Not Found :(" 404
+		}
+
+		@4xx status 4xx
+		handle_response @4xx {
+			redir https://pmh.codes
+		}
+	}
 }
 
 minio.pmh.codes {
@@ -163,10 +181,6 @@ drive.pmh.codes {
 
 	reverse_proxy nextcloud:80
 	reverse_proxy /db* nextcloud-adminer:8080
-}
-
-*.pmh.codes {
-	redir https://pmh.codes
 }
 
 pmh.codes {
