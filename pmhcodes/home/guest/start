@@ -1,6 +1,0 @@
-#!/bin/ash
-export PATH=$PATH:/home/pmh:/home/guest
-cat /home/guest/motd
-
-cd /home/pmh
-/bin/ash

@@ -172,12 +172,15 @@ drive.pmh.codes {
 pmh.codes {
 	import commons
 
-	@query_exists {
+	@root_and_query_exists {
+		path /
 		expression {uri}.contains('?')
 	}
 
-	reverse_proxy host.docker.internal:7683
-	reverse_proxy @query_exists supershort:8080
+	redir /ghost* /
+
+	reverse_proxy ghost:2368
+	reverse_proxy @root_and_query_exists supershort:8080
 }
 
 www.pmh.codes {
@@ -186,12 +189,12 @@ www.pmh.codes {
 	redir https://pmh.codes{uri} permanent
 }
 
-log.pmh.codes {
+admin.pmh.codes {
 	import commons
 
+	redir / /ghost/
 	reverse_proxy ghost:2368
 }
-
 
 portainer.shutupandtakemy.codes {
 	import commons

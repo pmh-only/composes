@@ -5,33 +5,46 @@ services:
     image: ghost:alpine
     restart: always
     user: 1000:1000
+    env_file:
+      - .env
     environment:
       database__client: mysql
       database__connection__host: db
       database__connection__user: ghost
       database__connection__password: ghost
       database__connection__database: ghost
-      url: https://log.pmh.codes
+      mail__transport: SMTP
+      mail__options__service: Google
+      mail__options__host: smtp.gmail.com
+      mail__options__port: 587
+      mail__options__auth__user: ${GMAIL_USERNAME}
+      mail__options__auth__pass: ${GMAIL_PASSWORD}
+      mail__from: "'Minhyeok Park' <pmh_only@pmh.codes>"
+      admin__url: https://admin.pmh.codes
+      adapters__tenor__googleApiKey: ${TENOR_KEY}
+      url: https://pmh.codes
+    volumes:
+      - ./data/content:/var/lib/ghost/content:rw
     expose:
       - 2368
     networks:
       - ingress
       - ghost
   db:
-    image: mariadb
+    image: mysql:8
     restart: always
     user: "1000:1000"
     networks:
       - ghost
     volumes:
-      - ./data:/var/lib/mysql:rw
+      - ./data/mysql:/var/lib/mysql:rw
     expose:
       - 3306
     environment:
-      - MARIADB_RANDOM_ROOT_PASSWORD=yes
-      - MARIADB_DATABASE=ghost
-      - MARIADB_USER=ghost
-      - MARIADB_PASSWORD=ghost
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=ghost
+      - MYSQL_USER=ghost
+      - MYSQL_PASSWORD=ghost
 
 networks:
   ingress:

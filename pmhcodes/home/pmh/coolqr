@@ -1,7 +1,0 @@
-#!/bin/ash
-echo
-
-# oh! nice. you bypassed it.
-qrgen https://www.youtube.com/watch?v=dQw4w9WgXcQ
-
-echo
