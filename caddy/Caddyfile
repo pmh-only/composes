@@ -165,6 +165,10 @@ drive.pmh.codes {
 	reverse_proxy /db* nextcloud-adminer:8080
 }
 
+*.pmh.codes {
+	redir https://pmh.codes
+}
+
 pmh.codes {
 	import commons
 
@@ -188,9 +192,6 @@ log.pmh.codes {
 	reverse_proxy ghost:2368
 }
 
-*.pmh.codes {
-	redir https://pmh.codes
-}
 
 portainer.shutupandtakemy.codes {
 	import commons
