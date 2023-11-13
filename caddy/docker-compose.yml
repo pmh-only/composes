@@ -6,6 +6,7 @@ services:
     user: 1000:1000
     networks:
       - ingress
+      - caddy-monitor
     volumes:
       - ./data:/data
       - ./config:/config
@@ -31,3 +32,5 @@ networks:
   ingress:
     driver: bridge
     name: ingress
+  caddy-monitor:
+    name: caddy-monitor

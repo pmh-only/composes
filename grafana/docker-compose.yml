@@ -62,6 +62,7 @@ services:
     networks:
       - monitoring
       - mc-monitor
+      - caddy-monitor
       - minio-monitor
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -90,4 +91,6 @@ networks:
     name: mc-monitor
   minio-monitor:
     name: minio-monitor
+  caddy-monitor:
+    name: caddy-monitor
 
