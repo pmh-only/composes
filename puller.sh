@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /home/pmh/composes
 
 for d in */ ; do
     cd $d
