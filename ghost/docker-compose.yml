@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  minio:
+    image: ghost:alpine
+    restart: always
+    user: 1000:1000
+    env_file: .env
+    environment:
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: ghost
+      database__connection__password: ghost
+      database__connection__database: ghost
+      url: https://log.pmh.codes
+    expose:
+      - 2368
+    networks:
+      - ingress
+      - ghost
+  db:
+    image: mariadb
+    restart: always
+    user: "1000:1000"
+    networks:
+      - ghost
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    expose:
+      - 3306
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=ghost
+      - MARIADB_USER=ghost
+      - MARIADB_PASSWORD=ghost
+
+networks:
+  ingress:
+    name: ingress
+  ghost:

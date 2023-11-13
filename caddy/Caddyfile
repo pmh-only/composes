@@ -173,6 +173,12 @@ www.pmh.codes {
 	redir https://pmh.codes{uri} permanent
 }
 
+log.pmh.codes {
+	import commons
+
+	reverse_proxy ghost:2368
+}
+
 *.pmh.codes {
 	redir https://pmh.codes
 }
