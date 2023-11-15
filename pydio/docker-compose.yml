@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  pydio:
+    image: pydio/cells
+    restart: always
+    user: 1000:1000
+    networks:
+      - ingress
+      - pydio
+    volumes:
+      - /mnt/pydio/cells:/var/cells:rw
+      - /mnt/pydio/data:/var/cells/data:rw
+    environment:
+      CELLS_SITE_EXTERNAL: https://drive.pmh.codes
+    expose:
+      - "8080"
+  
+  db:
+    image: mysql:8
+    restart: always
+    user: 1000:1000
+    networks:
+      - pydio
+    volumes:
+      - /mnt/pydio/db:/var/lib/mysql:rw
+    expose:
+      - 3306
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=pydio
+      - MYSQL_USER=pydio
+      - MYSQL_PASSWORD=pydio
+  
+  mongo:
+    image: mongo
+    restart: always
+    user: 1000:1000
+    networks:
+      - pydio
+    volumes:
+      - /mnt/pydio/mongo:/data/db:rw
+      - ./initdb.sh:/docker-entrypoint-initdb.d/init.sh:ro
+    expose:
+      - 27017
+    environment:
+      - MONGO_INITDB_DATABASE=pydio
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+
+networks:
+  ingress:
+    driver: bridge
+    name: ingress
+  pydio:

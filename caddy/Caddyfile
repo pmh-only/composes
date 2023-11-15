@@ -143,10 +143,12 @@ backup.mc.shutupandtakemy.codes {
 	}
 }
 
-*.pmh.codes s3.pmh.codes {
+*.pmh.codes {
 	import commons
 
 	reverse_proxy / minio:9000 {
+		header_up Host "^([^\.]*)\.pmh\.codes$" "$1.s3.pmh.codes"
+
 		@4xx status 4xx
 		handle_response @4xx {
 			rewrite / /index.html
@@ -154,6 +156,8 @@ backup.mc.shutupandtakemy.codes {
 	}
 
 	reverse_proxy minio:9000 {
+		header_up Host "^([^\.]*)\.pmh\.codes$" "$1.s3.pmh.codes"
+
 		@404 status 404
 		handle_response @404 {
 			respond * ":: 404 ::
@@ -167,6 +171,11 @@ Oops, Resource Not Found :(" 404
 	}
 }
 
+s3.pmh.codes {
+	import commons
+	reverse_proxy minio:9000
+}
+
 minio.pmh.codes {
 	import commons
 
@@ -176,11 +185,12 @@ minio.pmh.codes {
 drive.pmh.codes {
 	import commons
 
-	redir /.well-known/carddav /remote.php/dav permanent
-	redir /.well-known/caldav /remote.php/dav permanent
-
-	reverse_proxy nextcloud:80
-	reverse_proxy /db* nextcloud-adminer:8080
+	reverse_proxy pydio:8080 {
+		transport http {
+			tls
+			tls_insecure_skip_verify
+		}
+	}
 }
 
 pmh.codes {
