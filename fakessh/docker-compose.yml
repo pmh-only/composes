@@ -8,9 +8,3 @@ services:
     ports:
       - 22:2222
     network_mode: none
-    networks:
-      - ingress
-
-networks:
-  ingress:
-    name: ingress
