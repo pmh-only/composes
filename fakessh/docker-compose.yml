@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  fakessh:
+    image: shutupandtakemy.codes/fakessh
+    restart: always
+    user: 10000:10000
+    ports:
+      - 22:2222
+    network_mode: none
+    networks:
+      - ingress
+
+networks:
+  ingress:
+    name: ingress
