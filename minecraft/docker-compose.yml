@@ -114,8 +114,8 @@ services:
     working_dir: /app
     command:
       - java
-      - -Xms1G
-      - -Xmx1G
+      - -Xms2G
+      - -Xmx2G
       - -XX:+UseG1GC
       - -XX:+ParallelRefProcEnabled
       - -XX:MaxGCPauseMillis=200
