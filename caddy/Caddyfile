@@ -11,7 +11,6 @@
 
 (commons) {
 	encode zstd gzip
-	minify
 
 	header -Server
 	header +Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
@@ -46,6 +45,7 @@
 
 *.shutupandtakemy.codes {
 	import commons
+	minify
 
 	root * /var/www/notfounddns
 	file_server
@@ -54,6 +54,7 @@
 shutupandtakemy.codes {
 	import commons
 	import 404index
+	minify
 
 	root * /var/www/home
 
@@ -63,12 +64,14 @@ shutupandtakemy.codes {
 
 www.shutupandtakemy.codes {
 	import commons
+	minify
 
 	redir https://shutupandtakemy.codes{uri} permanent
 }
 
 r.shutupandtakemy.codes {
 	import commons
+	minify
 
 	replace "r.shutupandtakemy.codes" "shutupandtakemy.codes"
 
@@ -84,24 +87,28 @@ bitwarden.shutupandtakemy.codes {
 
 chatsolution.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy chatsolution:80
 }
 
 djsgpt.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy djsgpt-adminer:8080
 }
 
 grafana.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy grafana:3000
 }
 
 guessaiword.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy guessaiword:8080
 	reverse_proxy /db* guessaiword-adminer:8080
@@ -109,6 +116,7 @@ guessaiword.shutupandtakemy.codes {
 
 goaccess.shutupandtakemy.codes {
 	import commons
+	minify
 
 	root * /var/www/report
 	file_server
@@ -116,12 +124,14 @@ goaccess.shutupandtakemy.codes {
 
 hello.shutupandtakemy.codes {
 	import commons
+	minify
 
 	respond "Hello, world! from caddy2"
 }
 
 *.mc.shutupandtakemy.codes mc.shutupandtakemy.codes {
 	import commons
+	minify
 
 	root * /var/www/mchome
 	file_server
@@ -129,18 +139,21 @@ hello.shutupandtakemy.codes {
 
 map.mc.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy mc-lobby:8100
 }
 
 mcmap.shutupandtakemy.codes {
 	import commons
+	minify
 
 	redir https://map.mc.shutupandtakemy.codes permanent
 }
 
 backup.mc.shutupandtakemy.codes {
 	import commons
+	minify
 
 	root * /mnt/minecraft-backups
 	file_server * {
@@ -150,6 +163,7 @@ backup.mc.shutupandtakemy.codes {
 
 *.pmh.codes {
 	import commons
+	minify
 
 	reverse_proxy / minio:9000 {
 		header_up Host "^([^\.]*)\.pmh\.codes$" "$1.s3.pmh.codes"
@@ -178,6 +192,7 @@ Oops, Resource Not Found :(" 404
 
 s3.pmh.codes {
 	import commons
+	minify
 	reverse_proxy minio:9000
 }
 
@@ -189,6 +204,7 @@ minio.pmh.codes {
 
 drive.pmh.codes {
 	import commons
+	minify
 
 	reverse_proxy pydio:8080 {
 		transport http {
@@ -200,6 +216,7 @@ drive.pmh.codes {
 
 pmh.codes {
 	import commons
+	minify
 
 	@root_and_query_exists {
 		path /
@@ -214,11 +231,13 @@ pmh.codes {
 
 www.pmh.codes {
 	import commons
+	minify
 
 	redir https://pmh.codes{uri} permanent
 }
 
 admin.pmh.codes {
+	minify
 	import commons
 
 	redir / /ghost/
@@ -227,6 +246,7 @@ admin.pmh.codes {
 
 portainer.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy portainer:9000
 }
@@ -234,11 +254,13 @@ portainer.shutupandtakemy.codes {
 sandbox.shutupandtakemy.codes {
 	import commons
 
+	minify
 	reverse_proxy host.docker.internal:7682
 }
 
 sowonpay.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy sowon-frontend:8080
 	reverse_proxy /api* sowon-backend:8080
@@ -247,12 +269,14 @@ sowonpay.shutupandtakemy.codes {
 
 speed.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy speedtest:80
 }
 
 tig.shutupandtakemy.codes {
 	import commons
+	minify
 
 	reverse_proxy buhtig-frontend:3000
 	reverse_proxy /api* buhtig-backend:3000
@@ -260,6 +284,7 @@ tig.shutupandtakemy.codes {
 
 wiki.pmh.codes {
 	import commons
+	minify
 
 	reverse_proxy wiki-frontend
 }
