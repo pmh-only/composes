@@ -129,6 +129,13 @@ hello.shutupandtakemy.codes {
 	respond "Hello, world! from caddy2"
 }
 
+keysboard.shutupandtakemy.codes {
+	import commons
+	minify
+
+	reverse_proxy keysboard:3000
+}
+
 *.mc.shutupandtakemy.codes mc.shutupandtakemy.codes {
 	import commons
 	minify

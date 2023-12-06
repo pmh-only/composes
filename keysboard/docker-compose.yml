@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  keysboard:
+    image: ghcr.io/pmh-only/keysboard
+    user: 1000:1000
+    restart: always
+    expose:
+      - 3000
+    networks:
+      - ingress
+      - keysboard
+    env_file: .env
+    environment:
+      ORIGIN: https://keysboard.shutupandtakemy.codes
+      PROTOCOL_HEADER: X-Forwarded-Proto
+      HOST_HEADER: X-Forwarded-Host
+      ADDRESS_HEADER: X-Forwarded-For
+      XFF_DEPTH: 2
+
+  migrator:
+    image: ghcr.io/pmh-only/keysboard:migrator
+    restart: on-failure
+    env_file: .env
+    networks:
+      - keysboard
+
+  mariadb:
+    image: mariadb
+    restart: always
+    user: 1000:1000
+    environment:
+      MARIADB_USER: keysboard
+      MARIADB_PASSWORD: keysboard
+      MARIADB_DATABASE: keysboard
+      MARIADB_RANDOM_ROOT_PASSWORD: true
+    networks:
+      - keysboard
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    expose:
+      - 3306
+
+  redis:
+    user: 1000:1000
+    image: redis:alpine
+    networks:
+      - keysboard
+    expose:
+      - 6379
+
+networks:
+  ingress:
+    name: ingress
+  keysboard:
