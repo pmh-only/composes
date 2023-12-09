@@ -42,8 +42,10 @@ services:
       - 3306
 
   redis:
-    user: 1000:1000
     image: redis:alpine
+    command: redis-server /redis.conf
+    volumes:
+      - ./redis.conf:/redis.conf:rw
     networks:
       - keysboard
     expose:
