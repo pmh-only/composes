@@ -18,19 +18,12 @@ services:
       - sowonpay
     expose:
       - 8080
-  sowon-adminer:
-    image: adminer
-    restart: always
-    networks:
-      - ingress
-      - sowonpay
-    expose:
-      - 8080
-  mariadb:
+  sowonpay-db:
     image: mariadb
     restart: always
     networks:
       - sowonpay
+      - maxscale
     volumes:
       - ./data:/var/lib/mysql:rw
     expose:
@@ -46,3 +39,5 @@ networks:
   ingress:
     name: ingress
   sowonpay:
+  maxscale:
+    name: maxscale

@@ -15,15 +15,6 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     networks:
       - djsgpt
-  djsgpt-adminer:
-    user: "1000:1000"
-    image: adminer
-    restart: always
-    networks:
-      - ingress
-      - djsgpt
-    expose:
-      - 8080
   djsgpt-db:
     env_file: .env
     user: "1000:1000"
@@ -31,6 +22,7 @@ services:
     restart: always
     networks:
       - djsgpt
+      - maxscale
     volumes:
       - ./data/mysql:/var/lib/mysql:rw
     expose:
@@ -45,3 +37,5 @@ networks:
   ingress:
     name: ingress
   djsgpt:
+  maxscale:
+    name: maxscale

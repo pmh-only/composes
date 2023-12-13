@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   mc-proxy:
-    image: ghcr.io/pmh-only/velocity
+    image: ghcr.io/pmh-only/velocity:experimental
     user: 1000:1000
     tty: true
     stdin_open: true
@@ -13,7 +13,7 @@ services:
     ports:
       - '25565:25565/tcp'
   mc-lobby:
-    image: ghcr.io/pmh-only/paper
+    image: ghcr.io/pmh-only/paper:experimental
     user: 1000:1000
     command: -Xms1G -Xmx1G
     tty: true
@@ -29,7 +29,7 @@ services:
       - 8100
       - 9100
   mc-creative:
-    image: ghcr.io/pmh-only/paper
+    image: ghcr.io/pmh-only/paper:experimental
     user: 1000:1000
     command: -Xms1G -Xmx1G
     tty: true
@@ -43,7 +43,7 @@ services:
       - 25565
       - 9100
   mc-minigames:
-    image: ghcr.io/pmh-only/paper
+    image: ghcr.io/pmh-only/paper:experimental
     user: 1000:1000
     command: -Xms2G -Xmx2G
     tty: true
@@ -57,7 +57,7 @@ services:
       - 25565
       - 9100
   mc-survival:
-    image: ghcr.io/pmh-only/paper
+    image: ghcr.io/pmh-only/paper:experimental
     user: 1000:1000
     command: -Xms1G -Xmx1G
     tty: true
@@ -70,12 +70,13 @@ services:
     expose:
       - 25565
       - 9100
-  mariadb:
+  mc-db:
     image: mariadb
     restart: always
     user: 1000:1000
     networks:
       - minecraft
+      - maxscale
     volumes:
       - ./data:/var/lib/mysql:rw
     expose:
@@ -110,3 +111,5 @@ networks:
     driver: bridge
   mc-monitor:
     name: mc-monitor
+  maxscale:
+    name: maxscale

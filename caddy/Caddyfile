@@ -295,3 +295,10 @@ wiki.pmh.codes {
 
 	reverse_proxy wiki-frontend
 }
+
+maxscale.shutupandtakemy.codes {
+	import commons
+	minify
+
+	reverse_proxy maxscale:8989
+}

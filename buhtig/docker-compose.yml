@@ -18,7 +18,7 @@ services:
       - ./data/files:/app/files
     environment:
       - DATABASE_SYNC=true
-      - DATABASE_HOST=mariadb
+      - DATABASE_HOST=buhtig-db
       - DATABASE_PASSWORD=buhtig
     expose:
       - 3000
@@ -26,12 +26,13 @@ services:
       - ingress
       - buhtig
 
-  mariadb:
+  buhtig-db:
     image: mariadb
     restart: always
     user: 1000:1000
     networks:
       - buhtig
+      - maxscale
     volumes:
       - ./data/db:/var/lib/mysql:rw
     expose:
@@ -45,4 +46,6 @@ services:
 networks:
   ingress:
     name: ingress
+  maxscale:
+    name: maxscale
   buhtig:

@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  maxscale:
+    image: mariadb/maxscale
+    volumes:
+      - ./data:/var/lib/maxscale:rw
+    expose:
+      - 8989
+    ports:
+      - 3306:3306
+    networks:
+      - ingress
+      - maxscale
+
+networks:
+  ingress:
+    name: ingress
+  maxscale:
+    name: maxscale

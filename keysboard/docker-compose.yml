@@ -25,7 +25,7 @@ services:
     networks:
       - keysboard
 
-  mariadb:
+  keysboard-db:
     image: mariadb
     restart: always
     user: 1000:1000
@@ -36,6 +36,7 @@ services:
       MARIADB_RANDOM_ROOT_PASSWORD: true
     networks:
       - keysboard
+      - maxscale
     volumes:
       - ./data:/var/lib/mysql:rw
     expose:
@@ -55,3 +56,5 @@ networks:
   ingress:
     name: ingress
   keysboard:
+  maxscale:
+    name: maxscale

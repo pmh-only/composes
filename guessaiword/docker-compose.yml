@@ -5,7 +5,7 @@ services:
     image: shutupandtakemy.codes/guessaiword:latest
     restart: always
     user: "1000:1000"
-    command: java -jar build.jar --spring.datasource.url=jdbc:mariadb://db:3306/guessaiword --spring.datasource.driverClassName=org.mariadb.jdbc.Driver --spring.datasource.username=guessaiword --spring.datasource.password=${MARIADB_PASSWORD} --guessaiword.ai.model=gpt-4
+    command: java -jar build.jar --spring.datasource.url=jdbc:mariadb://gaiw-db:3306/guessaiword --spring.datasource.driverClassName=org.mariadb.jdbc.Driver --spring.datasource.username=guessaiword --spring.datasource.password=${MARIADB_PASSWORD} --guessaiword.ai.model=gpt-4
     networks:
       - ingress
       - guessaiword
@@ -13,22 +13,14 @@ services:
       - AI_API_KEY=${AI_API_KEY}
     expose:
       - 8080
-  guessaiword-adminer:
-    image: adminer
-    restart: always
-    user: "1000:1000"
-    networks:
-      - ingress
-      - guessaiword
-    expose:
-      - 8080
-  db:
+  gaiw-db:
     env_file: .env
     image: mariadb
     restart: always
     user: "1000:1000"
     networks:
       - guessaiword
+      - maxscale
     volumes:
       - ./data:/var/lib/mysql:rw
     expose:
@@ -43,3 +35,5 @@ networks:
   ingress:
     name: ingress
   guessaiword:
+  maxscale:
+    name: maxscale

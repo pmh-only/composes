@@ -15,8 +15,6 @@ services:
       - /var/www:/var/www
       - /mnt/minecraft-backups:/mnt/minecraft-backups
       - /var/log/caddy:/var/log/caddy
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     env_file:
       - .env
     environment:

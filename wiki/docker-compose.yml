@@ -15,19 +15,12 @@ services:
       - wiki
     expose:
       - 80
-  wiki-adminer:
-    image: adminer
-    restart: always
-    networks:
-      - ingress
-      - wiki
-    expose:
-      - 8080
-  mariadb:
+  wiki-db:
     image: mariadb
     restart: always
     networks:
       - wiki
+      - maxscale
     volumes:
       - ./data:/var/lib/mysql:rw
     expose:
@@ -43,6 +36,8 @@ networks:
   ingress:
     name: ingress
   wiki:
+  maxscale:
+    name: maxscale
 
 volumes:
   images:
