@@ -258,13 +258,6 @@ portainer.shutupandtakemy.codes {
 	reverse_proxy portainer:9000
 }
 
-sandbox.shutupandtakemy.codes {
-	import commons
-
-	minify
-	reverse_proxy host.docker.internal:7682
-}
-
 sowonpay.shutupandtakemy.codes {
 	import commons
 	minify
