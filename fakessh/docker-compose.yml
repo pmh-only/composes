@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  fakessh:
+    image: ghcr.io/jaksi/sshesame
+    restart: always
+    user: 1000:1000
+    ports:
+      - "22:22/tcp"
+    volumes:
+      - ./data:/data:rw
+      - ./config.yaml:/config.yaml
+    
