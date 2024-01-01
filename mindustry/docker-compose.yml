@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  mindustry:
+    image: ghcr.io/pmh-only/mindustry
+    tty: true
+    stdin_open: true
+    user: 1000:1000
+    restart: always
+    volumes:
+      - ./data:/app
+    ports:
+      - '6567:6567/tcp'
+      - '6567:6567/udp'
+    environment:
+      - JVM_XMS=1G
+      - JVM_XMX=1G
