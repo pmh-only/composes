@@ -213,10 +213,18 @@ drive.pmh.codes {
 	import commons
 	minify
 
-	reverse_proxy pydio:8080 {
-		transport http {
-			tls
-			tls_insecure_skip_verify
+	handle_path /oneclick* {
+		root * /etc/caddy/templates/
+		try_files driveoneclick.html
+		file_server
+	}
+
+	handle {
+		reverse_proxy pydio:8080 {
+			transport http {
+				tls
+				tls_insecure_skip_verify
+			}
 		}
 	}
 }

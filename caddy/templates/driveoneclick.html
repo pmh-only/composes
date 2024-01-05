@@ -1,0 +1,33 @@
+<title>Park's Drive</title>
+<meta name="description" content="Click here to receive temporal drive access.">
+<p>Force-injecting temporal credentials...</p>
+<script>
+  (async () => {
+    const [login, password] = atob(window.location.search.slice(1)).split('::')
+    const res = await fetch('/a/frontend/session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        AuthInfo: {
+          login,
+          password,
+          type: 'credentials'
+        }
+      })
+    }).then((res) => res.json())
+
+    window.localStorage.setItem('token4', JSON.stringify(res.Token))
+    window.location.replace('/')
+  })().then(() => {
+    window.location.replace('/')
+  })
+</script>
+<style>
+  :root {
+    color: white;
+    background-color: rgb(66, 66, 66);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
