@@ -70,6 +70,21 @@ services:
     expose:
       - 25565
       - 9100
+  mc-fabric:
+    image: eclipse-temurin:17-alpine
+    user: 1000:1000
+    command: java -Xms1G -Xmx1G -jar server.jar
+    working_dir: /app
+    tty: true
+    stdin_open: true
+    restart: always
+    networks:
+      - minecraft
+    volumes:
+      - ./volumes/fabric:/app/:rw
+    expose:
+      - 25565
+      - 9100
   mc-db:
     image: mariadb
     restart: always
