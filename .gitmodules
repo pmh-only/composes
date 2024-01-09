@@ -1,4 +1,0 @@
-[submodule "minecraft/images"]
-	path = minecraft/images
-	url = https://github.com/pmh-only/papermc-image.git
-	branch = main

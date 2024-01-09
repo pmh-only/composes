@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  minecraft:
+    image: ghcr.io/pmh-only/paper
+    command: -Xms1G -Xmx1G
+    restart: always
+    user: 1000:1000
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./test:/app:rw
+    ports:
+      - '25565:25565'
