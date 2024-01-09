@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/pmh/composes
+cd /home/pmh/composes/$1
 
 for d in */ ; do
     cd $d

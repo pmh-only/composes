@@ -2,7 +2,7 @@
 DATE=`date +%Y%m%d`
 FILE_COUNT=`ls /mnt/minecraft-backups -l | wc -l`
 
-cd /home/pmh/composes/minecraft
+cd /home/pmh/composes/$1/minecraft
 
 docker compose stop
 
