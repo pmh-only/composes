@@ -1,0 +1,60 @@
+{
+	email pmh_only@pmh.codes
+	acme_dns cloudflare {env.CLOUDFLARE_KEY}
+	order minify after encode
+	order replace after minify
+
+	servers {
+		metrics
+	}
+}
+
+(commons) {
+	encode zstd gzip
+
+	header -Server
+	header +Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+	log {
+		output file /var/log/caddy/access.log {
+			roll_keep 100
+			roll_keep_for 720h
+		}
+
+		format transform `{request>remote_ip} - {request>user_id} [{ts}] "{request>method} {request>uri} {request>proto}" {status} {size} "{request>headers>Referer>[0]}" "{request>headers>User-Agent>[0]}"` {
+			time_format "02/Jan/2006:15:04:05 -0700"
+		}
+	}
+}
+
+*.mc.shutupandtakemy.codes mc.shutupandtakemy.codes {
+	import commons
+	minify
+
+	root * /var/www/mchome
+	file_server
+}
+
+map.mc.shutupandtakemy.codes {
+	import commons
+	minify
+
+	reverse_proxy mc-lobby:8100
+}
+
+mcmap.shutupandtakemy.codes {
+	import commons
+	minify
+
+	redir https://map.mc.shutupandtakemy.codes permanent
+}
+
+backup.mc.shutupandtakemy.codes {
+	import commons
+	minify
+
+	root * /mnt/minecraft-backups
+	file_server * {
+		browse /etc/caddy/templates/backupmc.html
+	}
+}

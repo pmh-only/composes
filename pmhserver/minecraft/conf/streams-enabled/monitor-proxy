@@ -1,4 +1,0 @@
-server {
-	listen     9100;
-	proxy_pass mc-proxy:9100;
-}

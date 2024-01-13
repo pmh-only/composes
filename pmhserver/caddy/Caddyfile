@@ -136,38 +136,6 @@ keysboard.shutupandtakemy.codes {
 	reverse_proxy keysboard:3000
 }
 
-*.mc.shutupandtakemy.codes mc.shutupandtakemy.codes {
-	import commons
-	minify
-
-	root * /var/www/mchome
-	file_server
-}
-
-map.mc.shutupandtakemy.codes {
-	import commons
-	minify
-
-	reverse_proxy mc-lobby:8100
-}
-
-mcmap.shutupandtakemy.codes {
-	import commons
-	minify
-
-	redir https://map.mc.shutupandtakemy.codes permanent
-}
-
-backup.mc.shutupandtakemy.codes {
-	import commons
-	minify
-
-	root * /mnt/minecraft-backups
-	file_server * {
-		browse /etc/caddy/templates/backupmc.html
-	}
-}
-
 *.pmh.codes {
 	import commons
 	minify

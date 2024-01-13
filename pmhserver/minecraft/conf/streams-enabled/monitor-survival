@@ -1,4 +1,0 @@
-server {
-	listen     9106;
-	proxy_pass mc-survival:9100;
-}

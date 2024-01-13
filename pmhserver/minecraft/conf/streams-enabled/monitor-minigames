@@ -1,4 +1,0 @@
-server {
-	listen     9107;
-	proxy_pass mc-minigames:9100;
-}

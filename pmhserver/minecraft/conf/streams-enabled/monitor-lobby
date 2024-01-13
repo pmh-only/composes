@@ -1,4 +1,0 @@
-server {
-	listen     9101;
-	proxy_pass mc-lobby:9100;
-}
